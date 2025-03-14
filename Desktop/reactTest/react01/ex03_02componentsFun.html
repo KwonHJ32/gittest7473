@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>** React Component02 : function **</title>
+</head>
+<body>
+  <h3>** React Component02 : function **</h3>
+  <hr>
+  <div id="react-container"></div>
+  <script src="https://unpkg.com/react@16/umd/react.development.js"></script>  
+  <script src="https://unpkg.com/react-dom@16/umd/react-dom.development.js"></script>   
+  <script>
+    // ** 컴포넌트: 기본적으로 html 을 return
+
+    // 1. 생성자함수를 이용한 객체 생성
+    //=> 대문자로 시작
+    //=> 생성자 함수는 화살표 함수는 안됨
+    function IngredientList01() {
+      return React.createElement('ul', {className:'ingredients'}, 
+                React.createElement('li', null, '연어 500그램'),
+                React.createElement('li', null, '잣 1 컵'),
+                React.createElement('li', null, '버터 상추 2 컵'),
+                React.createElement('li', null, '옐로 스쿼시(Yellow Squash, 호박의 한 종류) 1개'),
+                React.createElement('li', null, '올리브 오일 1/2 컵'),
+                React.createElement('li', null, '마늘 3 쪽'));
+    } //IngredientList0
+   //=> Test01
+   // ReactDOM.render(React.createElement(IngredientList01, null, null), 
+   //             document.getElementById('react-container'));
+
+    // 2. Data 전달받기
+    //=> 재사용성 높여줌
+    //=> 함수의 인자를 통해 외부로 부터 Data 를 전달 받음
+    //=> React 컴포넌트는 익명함수(화살표 함수 포함) 가능
+    //   이때 한문장 이면 { } 와 return 은 생략가능
+    //const IngredientList02 = function() {
+    const IngredientList02 = ({items}) =>  
+      React.createElement('ul', {className:'ingredients'}, 
+                  items.map((item, i) =>
+                    React.createElement('li', {key:i}, item)) //map   
+      ); //ul_create & 함수 IngredientList02 의 종료
+    let myRecipe=[
+        '연어 500그램',
+        '잣 1 컵',
+        '버터 상추 2 컵',
+        '옐로 스쿼시(Yellow Squash, 호박의 한 종류) 1개',
+        '올리브 오일 1/2 컵',
+        '마늘 3 쪽' ];
+    let myInstr=[
+        '오븐을 350도로 예열한다.',
+        '유리 베이킹 그릇에 올리브 오일을 두른다.',
+        '연어, 마늘, 잣을 그릇에 담는다.',
+        '오븐에서 15분간 익힌다.',
+        '옐로 스쿼시를 추가하고 다시 30분간 오븐에서 익힌다.',
+        '오븐에서 꺼내서 15분 식힌후 상추곁들여 내놓는다.' ];
+    //=> Test02
+    //   컴포넌트의 매개변수 items 에 배열 myRecipe 를 전달해야한다
+    ReactDOM.render(React.createElement(IngredientList02, {items:myInstr}, null)
+                    , document.getElementById('react-container'));
+
+  </script>
+
+</body>
+</html>
